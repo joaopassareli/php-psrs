@@ -3,8 +3,9 @@
 declare(strict_types=1);
 
 namespace Alura\Mvc\Controller;
+use Psr\Http\Server\RequestHandlerInterface;
 
-abstract class ControllerWithHtml implements Controller
+abstract class ControllerWithHtml implements RequestHandlerInterface
 {
     private const TEMPLATE_PATH = __DIR__ . '/../../views/';
 

@@ -2,7 +2,7 @@
 
 namespace Alura\Mvc\Helper;
 
-trait FlashMessageHelper 
+trait FlashMessageTrait 
 {
     private function addErrorMessage(string $error_message) :void
     {

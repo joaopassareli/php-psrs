@@ -5,29 +5,36 @@ declare(strict_types=1);
 namespace Alura\Mvc\Controller;
 
 use Alura\Mvc\Entity\Video;
-use Alura\Mvc\Helper\FlashMessageHelper;
+use Alura\Mvc\Helper\FlashMessageTrait;
+use Nyholm\Psr7\Response;
+use Psr\Http\Message\ResponseInterface;
 use Alura\Mvc\Repository\VideoRepository;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
-class NewVideoController implements Controller
+class NewVideoController implements RequestHandlerInterface
 {
-    use FlashMessageHelper;
+    use FlashMessageTrait;
     public function __construct(private VideoRepository $videoRepository)
     {
     }
 
-    public function processaRequisicao(): void
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $url = filter_input(INPUT_POST, 'url', FILTER_VALIDATE_URL);
+        $queryParams = $request->getQueryParams(); 
+        $url = filter_var($queryParams['url'], FILTER_VALIDATE_URL);
         if ($url === false) {
             $this->addErrorMessage('URL inválida');
-            header('Location: /novo-video');
-            return;
+            return new Response(404, [
+                'Location' => '/novo-video'
+            ]);
         }
         $titulo = filter_input(INPUT_POST, 'titulo');
         if ($titulo === false) {
             $this->addErrorMessage('Título não informado');
-            header('Location: /novo-video');
-            return;
+            return new Response(404, [
+                'Location' => '/novo-video'
+            ]);
         }
 
         $video = new Video($url, $titulo);
@@ -48,9 +55,13 @@ class NewVideoController implements Controller
         $success = $this->videoRepository->add($video);
         if ($success === false) {
             $this->addErrorMessage('Erro ao cadastrar vídeo');
-            header('Location: /novo-video');
+            return new Response(404, [
+                'Location' => '/novo-video'
+            ]);
         } else {
-            header('Location: /?sucesso=1');
+            return new Response(404, [
+                'Location' => '/sucesso=1'
+            ]);
         }
     }
 }
