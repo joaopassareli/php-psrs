@@ -1,6 +1,8 @@
 <?php
-require_once __DIR__ . '/inicio-html.php';
-/** @var \Alura\Mvc\Entity\Video|null $video */
+    /** @var \League\Plates\Template\Template $this */
+    $this->layout('layout');
+
+    /** @var \Alura\Mvc\Entity\Video|null $video */
 ?>
 <main class="container">
     <form class="container__formulario"
@@ -40,5 +42,4 @@ require_once __DIR__ . '/inicio-html.php';
     </form>
 </main>
 
-<?php
-require_once __DIR__ . '/fim-html.php';
+<?php $this->layout('layout');

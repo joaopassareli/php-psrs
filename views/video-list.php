@@ -1,6 +1,9 @@
 <?php
-require_once __DIR__ . '/inicio-html.php';
-/** @var \Alura\Mvc\Entity\Video[] $videoList */
+    /** @var \League\Plates\Template\Template $this */
+    $this->layout('layout');
+
+    
+    /** @var \Alura\Mvc\Entity\Video[] $videoList */
 ?>
 
 <ul class="videos__container">
@@ -27,4 +30,4 @@ require_once __DIR__ . '/inicio-html.php';
     <?php endforeach; ?>
 </ul>
 
-<?php require_once __DIR__ . '/fim-html.php';
+<?php $this->layout('layout');
